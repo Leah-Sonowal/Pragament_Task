@@ -1278,7 +1278,13 @@
       "subject": "Science",
       "topic": "Gravitation",
       "activity_name": "Archimedes Principle",
-      "activity_details": "Suspend a stone from a spring balance, immerse it in an overflow can, and collect displaced water. Compare weights."
+      "activity_details": "Suspend a stone from a spring balance, immerse it in an overflow can, and collect displaced water. Compare weights.",
+        "activity_path": [
+        {
+          "label": "Lab Simulation",
+          "path": "activities/Archimedes-Principle/index.html"
+        }
+      ]
     },
     {
       "class": "IX",
