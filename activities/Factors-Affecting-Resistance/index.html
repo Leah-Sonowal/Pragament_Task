@@ -310,7 +310,7 @@
       </div>
 
       <div class="btnrow">
-        <button class="btn ghost" id="resetBtn" type="button">↺ Reset wire</button>
+        <button class="btn ghost" id="resetBtn" type="button">↺ Reset activity</button>
         <button class="btn" id="recordBtn" type="button">＋ Record this reading</button>
       </div>
     </section>
@@ -552,10 +552,6 @@
       state[id] = parseFloat(e.target.value);
       render();
     });
-  });
-  $("resetBtn").addEventListener("click", function(){
-    setState(Object.assign({}, DEFAULTS), false);
-    toast("Wire reset to copper, 2.0 m, 0.50 mm, 20 °C");
   });
 
   /* ---------- observation table ---------- */
@@ -880,7 +876,29 @@
     b.addEventListener("click", function(){ setMode(b.dataset.mode); });
   });
 
-  /* ---------- start ---------- *
+  /* ---------- full reset (wire + trend + predict progress + challenge progress) ---------- */
+  function resetAll(){
+    // 1. wire and calculation state, with no leftover trend arrows
+    setState(Object.assign({}, DEFAULTS), false);
+
+    // 2. predict-mode progress and locked question state
+    qIndex = 0;
+    qScore = 0;
+    qAnswered = false;
+
+    // 3. challenge-mode progress and locked task state
+    taskDone = TASKS.map(function(){ return false; });
+    buildTasks();
+
+    // 4. rebuild whichever panel is currently visible so stale
+    //    disabled buttons / verdicts / statuses cannot linger
+    if (mode === "predict") showQuestion();
+
+    toast("Activity reset");
+  }
+  $("resetBtn").addEventListener("click", resetAll);
+
+  /* ---------- start ---------- */
   buildTasks();
   drawTable();
   setState(Object.assign({}, DEFAULTS), false);
@@ -888,3 +906,4 @@
 })();
 </script>
 </body>
+</html>
